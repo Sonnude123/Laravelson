@@ -33,7 +33,7 @@ Route::get('hoangson/{ten}',function($ten){
 	echo"chào son sinh ngày : ".$ten;
 })->where(['so'=>'[0-9]{2-11}']);
 
-// Định danh 
+// Định danh
 Route::get('route1',['as'=>'MyRoute',function(){
 	echo"xin chao son";
 }]);
@@ -82,3 +82,16 @@ Route::post('postfile',['as'=>'postfile','users'=>'MyController@postfile']);
 
 //json
 Route::get('getJson','MyController@getJson');
+
+
+// //view
+// Route::get('Time/{t}','MyController$Time');
+
+
+//blade template
+Route::get('blade',function(){
+return view('pages.laravel');
+});
+
+
+Route::get('BladeTemplate','MyController@blade');
