@@ -51,4 +51,9 @@ public function getJson()
    public function Time($t){
     return view('myView',['t'=>$t]);
    }
+   public function blade($str){
+    if($str =="laravel")
+        return view('pages.laravel');
+
+   }
 }
