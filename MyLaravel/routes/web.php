@@ -211,7 +211,22 @@ Route::get('nhapdiem',function(){
 return view('nhapdiem');
 })->name('nhapdiem');
 
+//auth
+Route::get('dangnhap',function(){
+	return view('dangnhap');
+});
+Route::post('login','AuthController@login')->name('login');
 
+
+//session
+
+Route::group(['middleware'=>['web']],function(){
+
+Route::get('Session',function(){
+Session::put('KhoaHoc','Laravel');
+echo"Đã  đặt session";
+});
+});
 
 
 
