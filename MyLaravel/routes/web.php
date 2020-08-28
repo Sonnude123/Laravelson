@@ -94,4 +94,125 @@ return view('pages.laravel');
 });
 
 
-Route::get('BladeTemplate','MyController@blade');
+Route::get('BladeTemplate/{str}','MyController@blade');
+
+
+// //Database
+// Route::get('database',function(){
+// 	Schema::create('diem',function($table){
+// $table->increments('id');//tang dan id
+// $table->string('diem',30);
+
+// 	});
+// 	echo"đã thực hiện tạo bảng";
+// });
+
+
+//queryBuilder
+Route::get('qb/get',function(){
+	$data = DB::table('sinhvien')->get();//lấy dữ liệu 
+	// var_dump($data);
+	foreach($data as $row){
+		foreach($row as $key=>$value){
+			echo $key.":".$value."<br>";
+		}
+		echo "<hr>";
+	}	
+});
+
+//select * from users where id =2
+Route::get('qb/where',function(){
+	$data = DB::table('sinhvien')->where('id','=',2)->get();//lấy dữ liệu 
+	// var_dump($data);
+	foreach($data as $row){
+		foreach($row as $key=>$value){
+			echo $key.":".$value."<br>";
+		}
+		echo "<hr>";
+	}	
+});
+
+
+//select id, tên sv
+Route::get('qb/select',function(){
+	$data = DB::table('sinhvien')->select(['id','tensv'])->where('id',3)->get();
+	// var_dump($data);
+	foreach($data as $row){
+		foreach($row as $key=>$value){
+			echo $key.":".$value."<br>";
+		}
+		echo "<hr>";
+	}	
+});
+//select name as ho ten
+
+Route::get('qb/raw',function(){
+	$data = DB::table('sinhvien')->select(DB::raw('id,tensv as hoten'))->where('id',3)->get();
+	// var_dump($data);
+	foreach($data as $row){
+		foreach($row as $key=>$value){
+			echo $key.":".$value."<br>";
+		}
+		echo "<hr>";
+	}	
+});
+
+//order by
+Route::get('qb/orderby',function(){
+	$data = DB::table('sinhvien')->select(DB::raw('id,tensv as hoten'))->where('id','>',1)->orderby('id','desc')->get();
+	// var_dump($data);
+	foreach($data as $row){
+		foreach($row as $key=>$value){
+			echo $key.":".$value."<br>";
+		}
+		echo "<hr>";
+	}	
+});
+
+//model
+Route::get('model/save',function(){
+	$user = new App\User();
+	$user-> tensv ="Mai";
+	$user-> lop="hht";
+
+	$user->save();
+	echo"đã thwucj hieemnj save";
+});
+
+Route::get('taocot',function(){
+	Schema::table('diem',function($table){
+		$table->integer('diem_tn')->unsigned();
+	});
+});
+
+
+Route::get('taocot1',function(){
+	Schema::table('diemtongket',function($table){
+		
+		$table->string('diemvan')->unsigned();
+		$table->integer('diemhp')->unsigned();
+		$table->integer('diemht')->unsigned();
+	});
+});
+
+
+//middleware
+
+Route::get('diem',function(){
+	echo"bạn đã đủ điểm";
+})->middleware('Mymiddle')->name('diem');
+Route::get('loi',function(){
+	echo"ban chua đủ diểm";
+})->name('loi');
+
+
+
+Route::get('nhapdiem',function(){
+return view('nhapdiem');
+})->name('nhapdiem');
+
+
+
+
+
+

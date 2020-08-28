@@ -52,8 +52,11 @@ public function getJson()
     return view('myView',['t'=>$t]);
    }
    public function blade($str){
+    $khoahoc="Laravel-KhoaPham";
     if($str =="laravel")
-        return view('pages.laravel');
-
-   }
+        return view('pages.laravel',['khoahoc'=>$khoahoc]);
+    elseif ($str == "php") 
+        return view('pages.php',['khoahoc'=>$khoahoc]);
+        
+     }
 }
